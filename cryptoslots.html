@@ -392,7 +392,9 @@ const { data, error } = await supabase
 if(error){
 
 document.getElementById("reviews").innerHTML =
-"Unable to load reviews";
+"ERROR: " + error.message;
+
+console.log(error);
 
 return;
 
