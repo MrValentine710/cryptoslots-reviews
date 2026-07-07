@@ -5,9 +5,7 @@
 
 <title>CryptoSlots Review - Crypto Casino Reviews</title>
 
-
 <style>
-
 
 body {
 
@@ -43,7 +41,7 @@ border:1px solid #b8860b;
 padding:25px;
 border-radius:15px;
 margin-top:25px;
-box-shadow:0 0 15px rgba(255,215,0,.2);
+box-shadow:0 0 15px rgba(255,215,gold,.2);
 
 }
 
@@ -56,6 +54,8 @@ color:black;
 font-weight:bold;
 text-decoration:none;
 border-radius:8px;
+border:none;
+cursor:pointer;
 display:inline-block;
 
 }
@@ -68,8 +68,16 @@ color:#FFD700;
 }
 
 
-</style>
+input, textarea, select {
 
+background:#111;
+color:white;
+border:1px solid #b8860b;
+border-radius:5px;
+
+}
+
+</style>
 
 </head>
 
@@ -93,7 +101,6 @@ CryptoSlots
 
 
 
-
 <h1>
 CryptoSlots Casino Review
 </h1>
@@ -102,41 +109,30 @@ CryptoSlots Casino Review
 
 <div class="card">
 
-
 <h2>
 Overview
 </h2>
 
-
 <p>
-
 CryptoSlots is a crypto-focused online casino
 that offers slot games, casino games,
 cryptocurrency payments, and promotional offers.
-
 </p>
 
 
 <h2 class="gold">
-
 Rating: ⭐⭐⭐⭐☆ 4/5
-
 </h2>
-
 
 </div>
 
 
 
-
-
 <div class="card">
-
 
 <h2>
 ✅ Pros
 </h2>
-
 
 <ul>
 
@@ -150,20 +146,15 @@ Rating: ⭐⭐⭐⭐☆ 4/5
 
 </ul>
 
-
 </div>
-
-
 
 
 
 <div class="card">
 
-
 <h2>
 ❌ Cons
 </h2>
-
 
 <ul>
 
@@ -175,100 +166,304 @@ Rating: ⭐⭐⭐⭐☆ 4/5
 
 </ul>
 
-
 </div>
 
 
 
-
-
 <div class="card">
-
 
 <h2>
 Games & Features
 </h2>
 
-
 <p>
-
 Players can explore casino games,
-slot machines, and crypto-based payment
-options.
-
+slot machines, and crypto-based payment options.
 </p>
-
 
 </div>
 
 
 
-
-
 <div class="card">
-
 
 <h2>
 Claim CryptoSlots Bonus
 </h2>
 
-
 <p>
-
 Visit CryptoSlots through our partner link.
-
 </p>
 
-
 <a class="button" href="#">
-
 Visit CryptoSlots
-
 </a>
-
 
 </div>
 
+
+
+<div class="card">
+
+<h2>
+Community Reviews
+</h2>
+
+
+<div id="reviews">
+Loading reviews...
+</div>
+
+
+</div>
 
 
 
 
 <div class="card">
 
+<h2>
+Leave a Review
+</h2>
+
+
+<input id="username"
+placeholder="Nickname"
+style="padding:10px;width:90%;margin-bottom:10px;">
+
+
+<select id="rating"
+style="padding:10px;width:90%;margin-bottom:10px;">
+
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+
+</select>
+
+
+
+<textarea id="comment"
+placeholder="Write your review..."
+style="padding:10px;width:90%;height:100px;"></textarea>
+
+
+<br><br>
+
+
+<button class="button" onclick="addReview()">
+Submit Review
+</button>
+
+
+</div>
+
+
+
+
+<div class="card">
 
 <h2>
 Affiliate Disclosure
 </h2>
 
-
 <p>
-
 This review may contain affiliate links.
 We may receive compensation if users sign up
 through our links.
+</p>
+
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+const supabaseUrl = "https://kpmnqeeiypjfkdkatrdi.supabase.co";
+
+
+const supabaseKey = "YOUR_PUBLIC_KEY_HERE";
+
+
+const supabase = window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+
+
+
+
+async function addReview(){
+
+
+const username =
+document.getElementById("username").value;
+
+
+const rating =
+document.getElementById("rating").value;
+
+
+const comment =
+document.getElementById("comment").value;
+
+
+
+if(username === "" || comment === ""){
+
+alert("Please enter a nickname and review");
+
+return;
+
+}
+
+
+
+const { error } = await supabase
+.from("reviews")
+.insert([
+
+{
+
+username: username,
+
+rating: rating,
+
+comment: comment
+
+}
+
+]);
+
+
+
+if(error){
+
+console.log(error);
+
+alert("Error submitting review");
+
+
+}
+
+else{
+
+
+alert("Review submitted!");
+
+location.reload();
+
+
+}
+
+
+}
+
+
+
+
+
+
+async function loadReviews(){
+
+
+
+const { data, error } = await supabase
+
+.from("reviews")
+
+.select("*")
+
+.order("created_at", {ascending:false});
+
+
+
+
+
+if(error){
+
+document.getElementById("reviews").innerHTML =
+"Unable to load reviews";
+
+return;
+
+}
+
+
+
+
+
+let html = "";
+
+
+
+
+data.forEach(review => {
+
+
+html += `
+
+
+<div style="
+border-bottom:1px solid #555;
+padding:15px 0;
+">
+
+
+<h3 class="gold">
+
+${review.username}
+
+</h3>
+
+
+<p>
+
+Rating: ${"⭐".repeat(review.rating)}
+
+</p>
+
+
+<p>
+
+${review.comment}
 
 </p>
 
 
 </div>
 
-<h2>Community Reviews</h2>
 
-<script src="https://giscus.app/client.js"
-        data-repo="MrValentine710/cryptoslots-reviews"
-        data-repo-id="R_kgDOTQkGCA"
-        data-category="General"
-        data-category-id="DIC_kwDOTQkGCM4DAsy3"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="1"
-        data-input-position="bottom"
-        data-theme="dark"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
+`;
+
+
+});
+
+
+
+document.getElementById("reviews").innerHTML = html;
+
+
+
+}
+
+
+
+loadReviews();
+
+
 </script>
+
+
 
 </body>
 
