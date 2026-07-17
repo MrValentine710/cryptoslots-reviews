@@ -1,472 +1,192 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>CryptoSlots Review - Crypto Casino Reviews</title>
-
-<style>
-
-body {
-
-font-family:Arial,sans-serif;
-background:#050505;
-color:white;
-max-width:1000px;
-margin:auto;
-padding:40px;
-
-}
-
-
-h1,h2 {
-
-color:#FFD700;
-
-}
-
-
-p {
-
-color:#ddd;
-line-height:1.6;
-
-}
-
-
-.card {
-
-background:linear-gradient(145deg,#111,#222);
-border:1px solid #b8860b;
-padding:25px;
-border-radius:15px;
-margin-top:25px;
-box-shadow:0 0 15px rgba(255,215,0,.2);
-
-}
-
-
-.button {
-
-background:linear-gradient(#FFD700,#b8860b);
-padding:14px 25px;
-color:black;
-font-weight:bold;
-text-decoration:none;
-border-radius:8px;
-border:none;
-cursor:pointer;
-display:inline-block;
-
-}
-
-
-.gold {
-
-color:#FFD700;
-
-}
-
-
-input, textarea, select {
-
-background:#111;
-color:white;
-border:1px solid #b8860b;
-border-radius:5px;
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<nav style="text-align:center; margin-bottom:30px;">
-
-<a href="index.html" class="gold">
-Home
-</a>
-
-|
-
-<a href="cryptoslots.html" class="gold">
-CryptoSlots
-</a>
-
-</nav>
-
-
-
-<h1>
-CryptoSlots Casino Review
-</h1>
-
-
-
-<div class="card">
-
-<h2>
-Overview
-</h2>
-
-<p>
-CryptoSlots is a crypto-focused online casino
-that offers slot games, casino games,
-cryptocurrency payments, and promotional offers.
-</p>
-
-
-<h2 class="gold">
-Rating: ⭐⭐⭐⭐☆ 4/5
-</h2>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>
-✅ Pros
-</h2>
-
-<ul>
-
-<li>Crypto payment options</li>
-
-<li>Large casino game selection</li>
-
-<li>Promotions and bonuses</li>
-
-<li>Fast cryptocurrency transactions</li>
-
-</ul>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>
-❌ Cons
-</h2>
-
-<ul>
-
-<li>Availability depends on location</li>
-
-<li>Crypto prices can change</li>
-
-<li>Players should gamble responsibly</li>
-
-</ul>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>
-Games & Features
-</h2>
-
-<p>
-Players can explore casino games,
-slot machines, and crypto-based payment options.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>
-Claim CryptoSlots Bonus
-</h2>
-
-<p>
-Visit CryptoSlots through our partner link.
-</p>
-
-<a class="button" href="#">
-Visit CryptoSlots
-</a>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>
-Community Reviews
-</h2>
-
-
-<div id="reviews">
-Loading reviews...
-</div>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-<h2>
-Leave a Review
-</h2>
-
-
-<input id="username"
-placeholder="Nickname"
-style="padding:10px;width:90%;margin-bottom:10px;">
-
-
-<select id="rating"
-style="padding:10px;width:90%;margin-bottom:10px;">
-
-<option value="5">⭐⭐⭐⭐⭐</option>
-<option value="4">⭐⭐⭐⭐</option>
-<option value="3">⭐⭐⭐</option>
-<option value="2">⭐⭐</option>
-<option value="1">⭐</option>
-
-</select>
-
-
-
-<textarea id="comment"
-placeholder="Write your review..."
-style="padding:10px;width:90%;height:100px;"></textarea>
-
-
-<br><br>
-
-
-<button class="button" onclick="addReview()">
-Submit Review
-</button>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-<h2>
-Affiliate Disclosure
-</h2>
-
-<p>
-This review may contain affiliate links.
-We may receive compensation if users sign up
-through our links.
-</p>
-
-</div>
-
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
-
 const supabaseUrl = "https://kpmnqeeiypjfkdkatrdi.supabase.co";
-
 
 const supabaseKey = "sb_publishable_ym-Pi6XjRZb6mquFTlS23Q_FbiWY9R4";
 
-
 const supabase = window.supabase.createClient(
-supabaseUrl,
-supabaseKey
+    supabaseUrl,
+    supabaseKey
 );
 
 
-
-
+// Submit Review
 
 async function addReview(){
 
+    const username = document.getElementById("username").value.trim();
 
-const username =
-document.getElementById("username").value;
+    const rating = Number(
+        document.getElementById("rating").value
+    );
 
-
-const rating =
-document.getElementById("rating").value;
-
-
-const comment =
-document.getElementById("comment").value;
+    const comment = document.getElementById("comment").value.trim();
 
 
+    if(username === "" || comment === ""){
 
-if(username === "" || comment === ""){
+        alert("Please enter a nickname and review");
+        return;
 
-alert("Please enter a nickname and review");
-
-return;
-
-}
+    }
 
 
-
-const { error } = await supabase
-.from("reviews")
-.insert([
-
-{
-
-username: username,
-
-rating: rating,
-
-comment: comment
-
-}
-
-]);
+    const { error } = await supabase
+    .from("reviews")
+    .insert([
+        {
+            username: username,
+            rating: rating,
+            comment: comment
+        }
+    ]);
 
 
+    if(error){
 
-if(error){
+        console.error("Supabase Error:", error);
 
-console.log(error);
+        alert(
+            "Error submitting review:\n" + error.message
+        );
 
-alert("Error submitting review");
+        return;
 
-
-}
-
-else{
-
-
-alert("Review submitted!");
-
-location.reload();
+    }
 
 
-}
+    alert("Review submitted!");
 
+    document.getElementById("username").value = "";
+    document.getElementById("comment").value = "";
+
+    loadReviews();
 
 }
 
 
 
-
-
+// Load Reviews
 
 async function loadReviews(){
 
 
+    const { data, error } = await supabase
 
-const { data, error } = await supabase
+    .from("reviews")
 
-.from("reviews")
+    .select("*")
 
-.select("*")
-
-.order("created_at", {ascending:false});
-
-
-
+    .order("created_at", {
+        ascending:false
+    });
 
 
-if(error){
 
-document.getElementById("reviews").innerHTML =
-"ERROR: " + error.message;
+    if(error){
 
-console.log(error);
+        console.error(error);
 
-return;
+        document.getElementById("reviews").innerHTML =
+        `
+        <p style="color:red;">
+        Error loading reviews:
+        ${error.message}
+        </p>
+        `;
+
+        return;
+
+    }
+
+
+
+    let html = "";
+
+
+
+    if(data.length === 0){
+
+        html =
+        `
+        <p>
+        No reviews yet. Be the first!
+        </p>
+        `;
+
+    }
+
+
+
+    data.forEach(review => {
+
+
+        html +=
+
+        `
+        <div style="
+        border-bottom:1px solid #555;
+        padding:15px 0;
+        ">
+
+
+        <h3 class="gold">
+
+        ${escapeHTML(review.username)}
+
+        </h3>
+
+
+        <p>
+
+        Rating:
+        ${"⭐".repeat(review.rating)}
+
+        </p>
+
+
+        <p>
+
+        ${escapeHTML(review.comment)}
+
+        </p>
+
+
+        </div>
+        `;
+
+
+    });
+
+
+
+    document.getElementById("reviews").innerHTML = html;
+
 
 }
 
 
 
+// Prevent HTML injection
 
+function escapeHTML(text){
 
-let html = "";
-
-
-
-
-data.forEach(review => {
-
-
-html += `
-
-
-<div style="
-border-bottom:1px solid #555;
-padding:15px 0;
-">
-
-
-<h3 class="gold">
-
-${review.username}
-
-</h3>
-
-
-<p>
-
-Rating: ${"⭐".repeat(review.rating)}
-
-</p>
-
-
-<p>
-
-${review.comment}
-
-</p>
-
-
-</div>
-
-
-`;
-
-
-});
-
-
-
-document.getElementById("reviews").innerHTML = html;
-
-
+    return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
 
+
+// Start loading reviews
 
 loadReviews();
 
 
 </script>
-
-
-
-</body>
-
-</html>
